@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.uv.tpcs_practica01;
+package org.uv.tpcs_backend;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +13,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ *
+ * @author 2omar
+ */
 public class EmpleadoDAO implements IDAOGeneral<Empleado, Integer>{
     
     @Override
@@ -73,7 +76,7 @@ public class EmpleadoDAO implements IDAOGeneral<Empleado, Integer>{
             pstm.setInt(4, p.getClave());
             pstm.executeUpdate();
             return true;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(LEmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } 
@@ -286,10 +289,4 @@ public boolean delete(Integer clave) {
         return empleados;
     }
     */
-}
-
-    @Override
-    public Empleado findById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
