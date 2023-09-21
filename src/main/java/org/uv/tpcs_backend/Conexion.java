@@ -21,7 +21,7 @@ public class Conexion {
     private Connection con = null;
     private static Conexion cx = null;
     
-    private final String bd = "practica1";
+    private final String bd = "empleado";
     private final String url = "jdbc:mysql://localhost:3306/";
     private final String user = "root";
     private final String password = System.getProperty("database.password");
@@ -29,7 +29,7 @@ public class Conexion {
     private Conexion() {
         try {
             con = DriverManager.getConnection(url + bd, user, password);
-            Logger.getLogger(Conexion.class.getName()).log(Level.INFO, "SSe ha conectado la base de datos {0}.", bd);
+            Logger.getLogger(Conexion.class.getName()).log(Level.INFO, "Se ha conectado la base de datos {0}.", bd);
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, "No se ha conectado a la base de datos {0}.", bd);
         }
