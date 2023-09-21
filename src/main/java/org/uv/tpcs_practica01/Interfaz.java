@@ -198,7 +198,8 @@ public class Interfaz extends javax.swing.JFrame {
     private void DatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DatosMouseClicked
         // TODO add your handling code here:
         int row = Datos.getSelectedRow();
-        String clave = (String)Datos.getValueAt(row, 0);
+        Object objClave = Datos.getValueAt(row, 0);
+        String clave = (objClave == null) ? "" : objClave.toString();
         String nombre = (String)Datos.getValueAt(row, 1);
         String direccion = (String)Datos.getValueAt(row, 2);
         String telefono = (String)Datos.getValueAt(row, 3);
@@ -234,7 +235,7 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
         // TODO add your handling code here:
-        LEmpleadoDAO empleado = new LEmpleadoDAO(Nombre.getText(), Direccion.getText(), Telefono.getText());
+        LEmpleadoDAO empleado = new LEmpleadoDAO(Integer.parseInt(Clave.getText()),Nombre.getText(), Direccion.getText(), Telefono.getText());
         int row = Datos.getSelectedRow();
         String aux = (String)Datos.getValueAt(row, 0);
         int claveempleado = Integer.parseInt(aux);
@@ -266,6 +267,7 @@ public class Interfaz extends javax.swing.JFrame {
             try {
                 int clv = Integer.parseInt(Buscador.getText());
                 Datos.setModel(empleadodao.constructTable(empleadodao.fingById(clv)));
+                System.out.println(clv);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "No existe un empleadocon la clave " + Buscador.getText() + ".");
                 Buscador.setText("");
@@ -319,6 +321,7 @@ public class Interfaz extends javax.swing.JFrame {
         this.Nombre.setText("");
         this.Direccion.setText("");
         this.Telefono.setText("");
+        this.Buscador.setText("");
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

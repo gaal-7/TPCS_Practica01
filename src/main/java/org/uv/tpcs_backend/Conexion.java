@@ -42,6 +42,10 @@ public class Conexion {
     public static synchronized Conexion getInstance() {
         if (cx == null) {
             cx = new Conexion();
+            System.out.println("Abierto, Cerrado");
+        }
+        else{
+           System.out.println("Ya no deja abrir"); 
         }
         return cx;
     }

@@ -36,6 +36,7 @@ public class EmpleadoDAO implements IDAOGeneral<Empleado, Integer>{
                     Logger.getLogger(LEmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
                     return false;
                 }
+               
             }
         };
         Conexion con = Conexion.getInstance();
@@ -50,12 +51,15 @@ public class EmpleadoDAO implements IDAOGeneral<Empleado, Integer>{
         public boolean execute (Connection con){
             try {
             String sql = "update empleado set nombre=?, direccion=?, telefono=? where clave=?";
+            System.out.println(p.getTelefono());
+            System.out.println(pojo.getTelefono());
             PreparedStatement pstm = con.prepareStatement(sql);
             pstm.setString(1, p.getNombre());
             pstm.setString(2, p.getDireccion());
             pstm.setString(3, p.getTelefono());
             pstm.setInt(4, p.getClave());
             pstm.executeUpdate();
+            System.out.println(pstm.toString());
             return true;
         } catch (Exception ex) {
             Logger.getLogger(LEmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,7 +103,7 @@ public boolean delete(Integer clave) {
                 
                 List<Empleado> listaEmpleados = new ArrayList<>();
                 
-                String consulta = "SELECT * FROM empleados";
+                String consulta = "SELECT * FROM empleado";
                 try (PreparedStatement preparedStatement = conexion.prepareStatement(consulta)) {
                     ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -118,13 +122,7 @@ public boolean delete(Integer clave) {
                     
                 } catch (SQLException e) {
                      Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, "Error al buscar empleados", e);
-                } finally {
-                    try {
-                        conexion.close();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, "Error al cerrar la conexión", ex);
-                    }
-                }
+                } 
                 
                 return listaEmpleados;
             }
@@ -132,6 +130,7 @@ public boolean delete(Integer clave) {
         };
         
         Conexion con = Conexion.getInstance();
+        
         List<Empleado> listaEmpleados = con.select(sel);
         return listaEmpleados;
     }
@@ -145,7 +144,7 @@ public boolean delete(Integer clave) {
                 
                 List<Empleado> listaEmpleados = new ArrayList<>();
                
-                String consulta = "SELECT * FROM empleados WHERE clave = '" + clave + "'";
+                String consulta = "SELECT * FROM empleado WHERE clave = ?";
 
                 try (PreparedStatement preparedStatement = conexion.prepareStatement(consulta)) {
                     preparedStatement.setInt(1, clave);
@@ -162,13 +161,13 @@ public boolean delete(Integer clave) {
                     }
                 } catch (SQLException e) {
                      Logger.getLogger(LEmpleadoDAO.class.getName()).log(Level.SEVERE, "Error al buscar", e);
-                } finally {
+                } /*finally {
                     try {
                         conexion.close();
                     } catch (SQLException ex) {
                         Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
+                }*/
 
                 return listaEmpleados;
             }
@@ -178,39 +177,4 @@ public boolean delete(Integer clave) {
         List<Empleado> listaEmpleados = con.select(sel);
         return listaEmpleados.get(0);
     }
-    
-
-  /*  @Override
-    public List<Empleado> findAll() {
-        Conexion cx = Conexion.getInstance();
-        ResultSet rs = null;
-        List<Empleado> empleados = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM empleados";
-            rs = cx.select(sql);
-            while(rs.next()) {
-                Empleado empleado = new Empleado(
-                    rs.getInt("clave"), 
-                    rs.getString("nombre"), 
-                    rs.getString("direccion"), 
-                    rs.getString("telefono")
-                );
-                empleados.add(empleado);
-            }
-            Logger.getLogger(LEmpleadoDAO.class.getName()).log(Level.INFO, "Se ha obtenido toda la lista de empleados registrados");
-        } catch (SQLException ex) {
-            Logger.getLogger(LEmpleadoDAO.class.getName()).log(Level.SEVERE, "No se pudo obtener toda la lista de empleados registrados", ex);
-        }
-        finally {
-            try {
-                if(rs != null) {
-                    rs.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(LEmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return empleados;
-    }
-    */
 }
