@@ -13,10 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author 2omar
- */
+
 public class Conexion {
     private Connection con = null;
     private static Conexion cx = null;
